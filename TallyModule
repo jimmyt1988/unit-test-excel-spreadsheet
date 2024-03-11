@@ -1,0 +1,38 @@
+Function Tally(refCell As Range, decayValueCell As Range, recoverValueCell As Range) As Single
+    
+    Dim previousCellValue As Single
+    Dim outputValue As Single
+    
+    ' Get the value from the cell to the left of refCell.
+    previousCellValue = refCell.Offset(0, -1).Value
+    
+    ' Check if the decay value is exactly equal to 1 (this might be a bit inflexible if you expect a range of values).
+    If previousCellValue >= 1 Then
+        ' If so, subtract the decay value from the previous cell value and ensure it doesn't go below zero.
+        outputValue = Application.Max(previousCellValue - decayValueCell.Value, 0)
+    End If
+
+    Tally = outputValue
+
+End Function
+
+Sub Tally_ShouldDecayValueByDecayValueCell_Test(debugService As DebugServiceClass)
+    ' Arrange
+    
+    Dim ws As Worksheet
+    Dim actualResult As Single
+    
+    Set ws = ThisWorkbook.Sheets("TalliesTest")
+
+    ' Set up test data on the worksheet
+    ws.Range("A1").Value = 0.2   ' 'decayValueCell'
+    ws.Range("A2").Value = 1 ' 'previous value of refCell'
+    
+    ' Act
+    
+    actualResult = Tally(ws.Range("B2"), ws.Range("A1"), ws.Range("B1"))
+     
+    'Assert
+    
+    debugService.Assert (actualResult = 0.8)
+End Sub
