@@ -1,0 +1,24 @@
+Option Explicit
+
+Private assertionsMade As Long
+Private assertionsPassed As Long
+
+Public Sub Assert(condition As Boolean)
+    assertionsMade = assertionsMade + 1
+    If condition Then
+        assertionsPassed = assertionsPassed + 1
+    End If
+End Sub
+
+Public Sub DisplayAssertions()
+    MsgBox "Total Assertions Made: " & assertionsMade & vbCrLf & _
+           "Assertions Passed: " & assertionsPassed, vbInformation, "Assertion Summary"
+End Sub
+
+Public Function TotalAssertions() As Long
+    TotalAssertions = assertionsMade
+End Function
+
+Public Function PassedAssertions() As Long
+    PassedAssertions = assertionsPassed
+End Function
