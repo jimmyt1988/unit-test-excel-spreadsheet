@@ -1,0 +1,15 @@
+Option Explicit
+
+Private debugService As DebugServiceClass
+
+Private Sub Class_Initialize()
+    Set debugService = New DebugServiceClass
+End Sub
+
+Public Sub RunAllTests()
+
+    Tally_ShouldDecayValueByDecayValueCell_Test debugService
+    
+    debugService.DisplayAssertions
+    
+End Sub
